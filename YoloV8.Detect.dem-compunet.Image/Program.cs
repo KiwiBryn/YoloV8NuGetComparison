@@ -19,7 +19,6 @@ using Compunet.YoloV8.Plotting;
 
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 
 namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
@@ -27,10 +26,10 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "I prefer the old style")]
    class Program
    {
-      private static Model.ApplicationSettings _applicationSettings;
-
       static async Task Main()
       {
+         Model.ApplicationSettings _applicationSettings;
+
          Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} Detect.Image starting");
 
          try
@@ -73,11 +72,8 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
 
                   options = options.Replace(";", Environment.NewLine);
 
-                  if (_applicationSettings.Diagnostics)
-                  {
-                     Console.WriteLine($"CUDA Options:");
-                     Console.WriteLine(options);
-                  }
+                  Console.WriteLine($"CUDA Options:");
+                  Console.WriteLine(options);
 
                   builder.UseCuda(cudaProviderOptions);
                }
@@ -125,12 +121,9 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
 
                   options = options.Replace(";", Environment.NewLine);
 
-                  if (_applicationSettings.Diagnostics)
-                  {
-                     Console.WriteLine($"Tensor RT Options:");
-                     Console.WriteLine(options);
-                  }
-
+                  Console.WriteLine($"Tensor RT Options:");
+                  Console.WriteLine(options);
+ 
                   builder.UseTensorrt(tensorRToptions);
                }
             }
@@ -159,92 +152,50 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
             });
             */
 
-            using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
+            using (var predictor = builder.Build())
             {
-               Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Build start");
-
-               using (var predictor = builder.Build())
+               using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
                {
-                  Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Build done");
-
-                  Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 model Width:{predictor.Metadata.ImageSize.Width} Height:{predictor.Metadata.ImageSize.Height}");
-
                   Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Input image Width:{image.Width} Height:{image.Height} File:{_applicationSettings.ImageInputPath}");
 
-                  if (_applicationSettings.InputImageResize)
-                  {
-                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Scale image Width:{_applicationSettings.InputImageResizeWidth} Height:{_applicationSettings.InputImageResizeHeight} Mode:{Enum.GetName(_applicationSettings.InputImageResizeMode)}");
-
-                     image.Mutate(x => x.Resize(new ResizeOptions()
-                     {
-                        Mode = _applicationSettings.InputImageResizeMode,
-                        Size = new Size()
-                        {
-                           Height = _applicationSettings.InputImageResizeHeight,
-                           Width = _applicationSettings.InputImageResizeWidth,
-                        }
-                     }));
-
-                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Scaled image Width:{image.Width} Height:{image.Height}");
-                  }
-
-                  Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Pre-processed image Width:{image.Width} Height:{image.Height}");
-
-                  await image.SaveAsJpegAsync(_applicationSettings.ImagePreprocessedPath);
-
-                  var result = await predictor.DetectAsync(image);
+                  var predictions = await predictor.DetectAsync(image);
 
                   for (var i = 1; i <= _applicationSettings.IterationsWarmUp; i++)
                   {
-                     result = await predictor.DetectAsync(image);
+                     predictions = await predictor.DetectAsync(image);
 
-                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i} Pre-process: {result.Speed.Preprocess.TotalMilliseconds:F0}mSec Inference: {result.Speed.Inference.TotalMilliseconds:F0}mSec Post-process: {result.Speed.Postprocess.TotalMilliseconds:F0}mSec");
+                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i} Pre-process: {predictions.Speed.Preprocess.TotalMilliseconds:F0}mSec Inference: {predictions.Speed.Inference.TotalMilliseconds:F0}mSec Post-process: {predictions.Speed.Postprocess.TotalMilliseconds:F0}mSec");
                   }
 
-                  TimeSpan prepossingDuration = new();
-                  TimeSpan inferencingDuration = new();
-                  TimeSpan postProcessingDuration = new();
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+                  DateTime start = DateTime.UtcNow;
 
                   for (var i = 0; i < _applicationSettings.Iterations; i++)
                   {
-                     result = await predictor.DetectAsync(image);
+                     predictions = await predictor.DetectAsync(image);
+                  }
 
-                     prepossingDuration += result.Speed.Preprocess;
-                     inferencingDuration += result.Speed.Inference;
-                     postProcessingDuration += result.Speed.Postprocess;
+                  DateTime finish = DateTime.UtcNow;
+                  Console.WriteLine($" {finish:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
+                  TimeSpan duration = finish - start;
+                  Console.WriteLine($" Average:{duration.TotalMilliseconds/_applicationSettings.Iterations:F0}mSec");
 
-                     if (_applicationSettings.Diagnostics)
-                     {
-                        Console.WriteLine($"Boxes:{result.Boxes.Length}");
+                  Console.WriteLine($" Boxes: {predictions.Boxes.Count()}");
 
-                        foreach (var prediction in result.Boxes)
-                        {
-                           Console.WriteLine($"Class {prediction.Class} {(prediction.Confidence * 100.0):F0}% X:{prediction.Bounds.X} Y:{prediction.Bounds.Y} Width:{prediction.Bounds.Width} Height:{prediction.Bounds.Height}");
-                        }
-
-                        Console.WriteLine();
-                     }
-                     else
-                     {
-                        Console.Write(".");
-                     }
+                  foreach (var box in predictions.Boxes)
+                  {
+                     Console.WriteLine($"  Class {box.Class.Name} {(box.Confidence * 100.0):f1}% X:{box.Bounds.Left} Y:{box.Bounds.Right} Width:{box.Bounds.Width} Height:{box.Bounds.Height}");
                   }
                   Console.WriteLine();
 
                   Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Plot and save : {_applicationSettings.ImageOutputPath}");
 
-                  using (var imageOutput = await result.PlotImageAsync(image))
+                  using (var imageOutput = await predictions.PlotImageAsync(image))
                   {
                      Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Output image Width:{imageOutput.Width} Height:{imageOutput.Height}");
 
                      await imageOutput.SaveAsJpegAsync(_applicationSettings.ImageOutputPath);
                   }
-
-                  Console.WriteLine();
-                  Console.WriteLine($"Total duration Average:{(prepossingDuration + inferencingDuration + postProcessingDuration).TotalMilliseconds / _applicationSettings.Iterations:f0}mSec Iterations:{_applicationSettings.Iterations}");
-                  Console.WriteLine($"Pre-processing duration Average:{prepossingDuration.TotalMilliseconds / _applicationSettings.Iterations:f0}mSec");
-                  Console.WriteLine($"Inferencing duration Average:{inferencingDuration.TotalMilliseconds / _applicationSettings.Iterations:f0}mSec");
-                  Console.WriteLine($"Post-processing duration Average:{postProcessingDuration.TotalMilliseconds / _applicationSettings.Iterations:f0}mSec");
                }
             }
          }
