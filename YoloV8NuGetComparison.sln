@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{6345FE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{0BD05FE2-575C-4F7A-A02D-AA1A7E0B0C51}"
 	ProjectSection(SolutionItems) = preProject
+		Assets\Images\ChickensFeederCluster.jpeg = Assets\Images\ChickensFeederCluster.jpeg
+		Assets\Images\ChickensNoClustering.jpeg = Assets\Images\ChickensNoClustering.jpeg
 		Assets\Images\TennisBallsSomeClusters.jpg = Assets\Images\TennisBallsSomeClusters.jpg
 	EndProjectSection
 EndProject
