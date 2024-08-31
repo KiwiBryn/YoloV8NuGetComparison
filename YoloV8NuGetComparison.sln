@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{0BD05F
 		Assets\Images\ChickensFeederCluster.jpeg = Assets\Images\ChickensFeederCluster.jpeg
 		Assets\Images\ChickensNoClustering.jpeg = Assets\Images\ChickensNoClustering.jpeg
 		Assets\Images\TennisBallsSomeClusters.jpg = Assets\Images\TennisBallsSomeClusters.jpg
+		Assets\Images\TennisBallsSomeClusters640x640.jpeg = Assets\Images\TennisBallsSomeClusters640x640.jpeg
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{A90DAB1C-F23D-4C38-960A-0CC52CBD9326}"
