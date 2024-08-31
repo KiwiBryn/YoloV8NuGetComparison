@@ -40,26 +40,35 @@ namespace devMobile.IoT.YoloV8.Detect.NickSwardh.Image
 
             _applicationSettings = configuration.GetSection("ApplicationSettings").Get<Model.ApplicationSettings>();
 
-            Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load start : {_applicationSettings.ModelPath}");
+            Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load: {_applicationSettings.ModelPath}");
 
-            using (var predictor = new Yolo(_applicationSettings.ModelPath, false))
+            using (var predictor = new Yolo(_applicationSettings.ModelPath, _applicationSettings.UseCuda))
             {
-               Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load done");
-               Console.WriteLine();
-
                using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
                {
+                  Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Input image Width:{image.Width} Height:{image.Height} File:{_applicationSettings.ImageInputPath}");
+
                   var predictions = predictor.RunObjectDetection(image);
 
+                  for (var i = 1; i <= _applicationSettings.IterationsWarmUp; i++)
+                  {
+                     predictions = predictor.RunObjectDetection(image);
+
+                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i}");
+                  }
+
                   Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+                  DateTime start = DateTime.UtcNow;
 
                   for (int i = 0; i < _applicationSettings.Iterations; i += 1)
                   {
                      predictions = predictor.RunObjectDetection(image);
                   }
 
-                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
-                  Console.WriteLine();
+                  DateTime finish = DateTime.UtcNow;
+                  Console.WriteLine($" {finish:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
+                  TimeSpan duration = finish - start;
+                  Console.WriteLine($" Average:{duration.TotalMilliseconds/_applicationSettings.Iterations:f0}mSec");
 
                   Console.WriteLine($" Boxes: {predictions.Count}");
 
