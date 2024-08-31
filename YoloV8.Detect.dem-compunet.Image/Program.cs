@@ -1,0 +1,90 @@
+﻿//---------------------------------------------------------------------------------
+// Copyright (c) March 2024, devMobile Software - Azure Event Grid + YoloV8 file PoC
+//
+// This program is free software: you can redistribute it and/or modify it under the terms of the GNU
+// Affero General Public License as published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+// This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+// even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Affero General Public License for more details.
+// You should have received a copy of the GNU Affero General Public License along with this program. 
+// If not, see <https://www.gnu.org/licenses/>
+//
+//---------------------------------------------------------------------------------
+using Microsoft.Extensions.Configuration;
+
+using Compunet.YoloV8;
+using Compunet.YoloV8.Data;
+using Compunet.YoloV8.Plotting;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+
+
+namespace devMobile.IoT.YoloV8.Detect.dem_compunet.Image
+{
+   internal class Program
+   {
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "I prefer the old style")]
+      static async Task Main()
+      {
+         Model.ApplicationSettings _applicationSettings;
+
+         Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} YoloV8.dem-compunetImage starting");
+
+         try
+         {
+            // load the app settings into configuration
+            var configuration = new ConfigurationBuilder()
+                 .AddJsonFile("appsettings.json", false, true)
+            .Build();
+
+            _applicationSettings = configuration.GetSection("ApplicationSettings").Get<Model.ApplicationSettings>();
+
+            Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load start : {_applicationSettings.ModelPath}");
+
+            using (var predictor = YoloV8Predictor.Create(_applicationSettings.ModelPath))
+            {
+               Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load done");
+               Console.WriteLine();
+
+               using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
+               {
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+
+                  DetectionResult predictions = await predictor.DetectAsync(image);
+                  
+                  for (int i = 0; i < _applicationSettings.Iterations; i += 1)
+                  {
+                     predictions = await predictor.DetectAsync(image);
+                  }
+
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
+                  Console.WriteLine();
+
+                  Console.WriteLine($" Speed: {predictions.Speed} Boxes: {predictions.Boxes.Length}");
+
+                  foreach (var prediction in predictions.Boxes)
+                  {
+                     Console.WriteLine($"  Class:{prediction.Class} {(prediction.Confidence * 100.0):f1}% X:{prediction.Bounds.X} Y:{prediction.Bounds.Y} Width:{prediction.Bounds.Width} Height:{prediction.Bounds.Height}");
+                  }
+                  Console.WriteLine();
+
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Plot and save : {_applicationSettings.ImageOutputPath}");
+
+                  SixLabors.ImageSharp.Image imageOutput = await predictions.PlotImageAsync(image);
+
+                  await imageOutput.SaveAsJpegAsync(_applicationSettings.ImageOutputPath);
+               }
+            }
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} Application failure {ex.Message}", ex);
+         }
+
+         Console.WriteLine("Press enter to exit");
+         Console.ReadLine();
+      }
+   }
+}

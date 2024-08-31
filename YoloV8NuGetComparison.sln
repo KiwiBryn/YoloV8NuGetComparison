@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.dem-compunet.Image", "YoloV8.Detect.dem-compunet.Image\YoloV8.Detect.dem-compunet.Image.csproj", "{006E373E-8FD4-4CFC-B150-DC7369300CE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{6345FEE4-FF59-40AF-83E4-FB1143A95DA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{0BD05FE2-575C-4F7A-A02D-AA1A7E0B0C51}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Images\TennisBallsSomeClusters.jpg = Assets\Images\TennisBallsSomeClusters.jpg
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{A90DAB1C-F23D-4C38-960A-0CC52CBD9326}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Models\TennisBallsYoloV8s20240618.onnx = Assets\Models\TennisBallsYoloV8s20240618.onnx
+		Assets\Models\yolov8s.onnx = Assets\Models\yolov8s.onnx
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.sstainba.Image", "YoloV8.Detect.sstainba.Image\YoloV8.Detect.sstainba.Image.csproj", "{F61A6D6D-1E93-4F47-823B-86A0D984C1B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.NickSwardh.ImageV1", "YoloV8.Detect.NickSwardh.ImageV1\YoloV8.Detect.NickSwardh.ImageV1.csproj", "{383EB4AF-40F6-497A-80B2-C415FB6287DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.NickSwardh.ImageV2", "YoloV8.Detect.NickSwardh.ImageV2\YoloV8.Detect.NickSwardh.ImageV2.csproj", "{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{006E373E-8FD4-4CFC-B150-DC7369300CE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006E373E-8FD4-4CFC-B150-DC7369300CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006E373E-8FD4-4CFC-B150-DC7369300CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006E373E-8FD4-4CFC-B150-DC7369300CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F61A6D6D-1E93-4F47-823B-86A0D984C1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F61A6D6D-1E93-4F47-823B-86A0D984C1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F61A6D6D-1E93-4F47-823B-86A0D984C1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F61A6D6D-1E93-4F47-823B-86A0D984C1B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{383EB4AF-40F6-497A-80B2-C415FB6287DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{383EB4AF-40F6-497A-80B2-C415FB6287DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{383EB4AF-40F6-497A-80B2-C415FB6287DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{383EB4AF-40F6-497A-80B2-C415FB6287DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BD05FE2-575C-4F7A-A02D-AA1A7E0B0C51} = {6345FEE4-FF59-40AF-83E4-FB1143A95DA3}
+		{A90DAB1C-F23D-4C38-960A-0CC52CBD9326} = {6345FEE4-FF59-40AF-83E4-FB1143A95DA3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {788532E7-DB5C-4E48-AF0C-653AA8D65056}
+	EndGlobalSection
+EndGlobal

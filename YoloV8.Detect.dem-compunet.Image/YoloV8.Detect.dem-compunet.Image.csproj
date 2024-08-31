@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>YoloV8.dem_compunet.Image.Detect</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;IDE0130</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;IDE0130</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+     <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="YoloV8" Version="4.2.0" />
+  </ItemGroup>
+
+</Project>
