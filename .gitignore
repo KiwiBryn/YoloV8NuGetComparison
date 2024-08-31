@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/YoloV8.Detect.sstainba.Image/ImageOutput.jpg
+/YoloV8.Detect.dem-compunet.Image/ImageOutput.jpg
+/YoloV8.Detect.NickSwardh.ImageV1/ImageOutput.jpg
+/YoloV8.Detect.NickSwardh.ImageV2/ImageOutput.jpg
