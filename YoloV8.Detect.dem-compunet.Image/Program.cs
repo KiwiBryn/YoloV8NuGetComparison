@@ -50,10 +50,10 @@ namespace devMobile.IoT.YoloV8.Detect.dem_compunet.Image
 
                using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
                {
+                  DetectionResult predictions = await predictor.DetectAsync(image);
+
                   Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
 
-                  DetectionResult predictions = await predictor.DetectAsync(image);
-                  
                   for (int i = 0; i < _applicationSettings.Iterations; i += 1)
                   {
                      predictions = await predictor.DetectAsync(image);

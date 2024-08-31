@@ -49,9 +49,9 @@ namespace devMobile.IoT.YoloV8.Detect.NickSwardh.Image
 
                using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
                {
-                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
-
                   var predictions = predictor.RunObjectDetection(image);
+
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
 
                   for (int i = 0; i < _applicationSettings.Iterations; i += 1)
                   {
