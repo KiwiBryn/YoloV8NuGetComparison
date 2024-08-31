@@ -15,11 +15,11 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
 {
    public class ApplicationSettings
    {
-      public string ModelPath { get; set; }
+      public required string ModelPath { get; set; }
 
-      public string ImageInputPath { get; set; }
+      public required string ImageInputPath { get; set; }
 
-      public string ImageOutputPath { get; set; }
+      public required string ImageOutputPath { get; set; }
 
       public int IterationsWarmUp { get; set; }
 
@@ -33,7 +33,7 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
 
       public bool UseTvm { get; set; }
 
-      public string TvmSettings { get; set; }
+      public required string TvmSettings { get; set; }
 
       public int DeviceId { get; set; }
    }
