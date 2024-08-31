@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Copyright (c) August 2024, devMobile Software - Azure Event Grid + YoloV8 file PoC
+// Copyright (c) May 2024, devMobile Software - YoloV8 + image file Pose PoC
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 // Affero General Public License as published by the Free Software Foundation, either version 3 of the
@@ -11,16 +11,44 @@
 // If not, see <https://www.gnu.org/licenses/>
 //
 //---------------------------------------------------------------------------------
-namespace devMobile.IoT.YoloV8.Detect.dem_compunet.Image.Model
+using SixLabors.ImageSharp.Processing;
+
+namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
 {
-	public class ApplicationSettings
-	{
-		public required string ImageInputPath{ get; set; }
+   public class ApplicationSettings
+   {
+      public string ModelPath { get; set; }
 
-		public required string ImageOutputPath { get; set; }
+      public string ImageInputPath { get; set; }
 
-		public required string ModelPath { get; set; }
+      public string ImageOutputPath { get; set; }
 
-		public int Iterations {  get; set; }
-	}
+      public string ImagePreprocessedPath { get; set; }
+
+      public int IterationsWarmUp { get; set; }
+
+      public int Iterations { get; set; }
+
+      public bool Diagnostics { get; set; }
+
+      public bool UseCuda { get; set; }
+
+      public bool UseTensorrt { get; set; }
+
+      public bool UseRocm { get; set; }
+
+      public bool UseTvm { get; set; }
+
+      public string TvmSettings { get; set; }
+
+      public int DeviceId { get; set; }
+
+      public bool InputImageResize { get; set; }
+
+      public ResizeMode InputImageResizeMode { get; set; }
+
+      public int InputImageResizeWidth { get; set; }
+
+      public int InputImageResizeHeight { get; set; }
+   }
 }
