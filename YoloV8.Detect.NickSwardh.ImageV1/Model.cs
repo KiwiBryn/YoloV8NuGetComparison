@@ -13,13 +13,13 @@
 //---------------------------------------------------------------------------------
 namespace devMobile.IoT.YoloV8.Detect.NickSwardh.Image.Model
 {
-	public class ApplicationSettings
-	{
-		public required string ImageInputPath{ get; set; }
+   public class ApplicationSettings
+   {
+      public required string ImageInputPath { get; set; }
 
-		public required string ImageOutputPath { get; set; }
+      public required string ImageOutputPath { get; set; }
 
-		public required string ModelPath { get; set; }
+      public required string ModelPath { get; set; }
 
       public required string ImageProprocessedPath { get; set; }
 
