@@ -21,10 +21,16 @@ namespace devMobile.IoT.YoloV8.Detect.sstainba.Image.Model
 
 		public required string ModelPath { get; set; }
 
+      public int IterationsWarmUp { get; set; }
+
+      public int Iterations { get; set; }
+
+      public bool UseCuda { get; set; }
+
+      public int GpuId { get; set; }
+
       public required string FontName {  get; set; }
 
 		public int FontSize { get; set; }
-
-      public int Iterations { get; set; }
    }
 }

@@ -44,24 +44,33 @@ namespace devMobile.IoT.YoloV8.Detect.sstainba.Image
 
             Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load start : {_applicationSettings.ModelPath}");
 
-            using (var predictor = YoloV8Predictor.Create(_applicationSettings.ModelPath, ["TennisBall"]))
+            using (var predictor = YoloV8Predictor.Create(_applicationSettings.ModelPath, ["TennisBall"], _applicationSettings.UseCuda))
             {
-               Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load done");
-               Console.WriteLine();
-
                using (var image = await SixLabors.ImageSharp.Image.LoadAsync<Rgba32>(_applicationSettings.ImageInputPath))
                {
+                  Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Input image Width:{image.Width} Height:{image.Height} File:{_applicationSettings.ImageInputPath}");
+
                   var predictions = predictor.Predict(image);
 
+                  for (var i = 1; i <= _applicationSettings.IterationsWarmUp; i++)
+                  {
+                     predictions = predictor.Predict(image);
+
+                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i}");
+                  }
+
                   Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+                  DateTime start = DateTime.UtcNow;
 
                   for (int i = 0; i < _applicationSettings.Iterations; i += 1)
                   {
                      predictions = predictor.Predict(image);
                   }
 
-                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
-                  Console.WriteLine();
+                  DateTime finish = DateTime.UtcNow;
+                  Console.WriteLine($" {finish:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect done");
+                  TimeSpan duration = finish - start;
+                  Console.WriteLine($" Average:{duration.TotalMilliseconds/_applicationSettings.Iterations:f0}mSec");
 
                   Console.WriteLine($" Boxes: {predictions.Length}");
 
