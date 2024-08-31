@@ -23,13 +23,9 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
 
       public string ImageOutputPath { get; set; }
 
-      public string ImagePreprocessedPath { get; set; }
-
       public int IterationsWarmUp { get; set; }
 
       public int Iterations { get; set; }
-
-      public bool Diagnostics { get; set; }
 
       public bool UseCuda { get; set; }
 
@@ -42,13 +38,5 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
       public string TvmSettings { get; set; }
 
       public int DeviceId { get; set; }
-
-      public bool InputImageResize { get; set; }
-
-      public ResizeMode InputImageResizeMode { get; set; }
-
-      public int InputImageResizeWidth { get; set; }
-
-      public int InputImageResizeHeight { get; set; }
    }
 }
