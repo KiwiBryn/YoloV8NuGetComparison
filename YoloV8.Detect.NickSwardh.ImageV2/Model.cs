@@ -21,8 +21,6 @@ namespace devMobile.IoT.YoloV8.Detect.NickSwardh.Image.Model
 
 		public required string ModelPath { get; set; }
 
-      public double Threshold { get; set; }
-
       public int Iterations { get; set; }
    }
 }

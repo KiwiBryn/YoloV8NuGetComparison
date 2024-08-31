@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Copyright (c) March 2024, devMobile Software - YoloV8 + image file PoC
+// Copyright (c) August 2024, devMobile Software - YoloV8 + image file PoC
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 // Affero General Public License as published by the Free Software Foundation, either version 3 of the
