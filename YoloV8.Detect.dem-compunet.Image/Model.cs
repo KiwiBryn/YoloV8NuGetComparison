@@ -11,8 +11,6 @@
 // If not, see <https://www.gnu.org/licenses/>
 //
 //---------------------------------------------------------------------------------
-using SixLabors.ImageSharp.Processing;
-
 namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image.Model
 {
    public class ApplicationSettings
