@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Copyright (c) August 2024, devMobile Software - YoloV8 + image file PoC
+// Copyright (c) December 2024, devMobile Software - Sstainba YoloV8.Net performance
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 // Affero General Public License as published by the Free Software Foundation, either version 3 of the
@@ -32,6 +32,11 @@ namespace devMobile.IoT.YoloV8.Detect.sstainba.Image
          Model.ApplicationSettings _applicationSettings;
 
          Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} YoloV8.sstainba starting");
+#if RELEASE
+         Console.WriteLine("RELEASE");
+#else
+         Console.WriteLine("DEBUG");
+#endif
 
          try
          {
@@ -42,7 +47,7 @@ namespace devMobile.IoT.YoloV8.Detect.sstainba.Image
 
             _applicationSettings = configuration.GetSection("ApplicationSettings").Get<Model.ApplicationSettings>();
 
-            Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model load start : {_applicationSettings.ModelPath}");
+            Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} sstainba YoloV8 Model load start : {_applicationSettings.ModelPath}");
 
             using (var predictor = YoloV8Predictor.Create(_applicationSettings.ModelPath, ["TennisBall"], _applicationSettings.UseCuda))
             {
@@ -52,14 +57,16 @@ namespace devMobile.IoT.YoloV8.Detect.sstainba.Image
 
                   var predictions = predictor.Predict(image);
 
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Warmup Iterations:{_applicationSettings.IterationsWarmUp}");
+
                   for (var i = 1; i <= _applicationSettings.IterationsWarmUp; i++)
                   {
                      predictions = predictor.Predict(image);
 
-                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i}");
+                     //Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i}");
                   }
 
-                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start Iterations:{_applicationSettings.Iterations}");
                   DateTime start = DateTime.UtcNow;
 
                   for (int i = 0; i < _applicationSettings.Iterations; i += 1)
