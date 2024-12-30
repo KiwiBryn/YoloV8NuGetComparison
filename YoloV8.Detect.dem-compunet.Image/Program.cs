@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------------------------------------
-// Copyright (c) August 2024, devMobile Software - Azure Event Grid + YoloV8 file PoC
+// Copyright (c) November 2024, devMobile Software - Azure Event Grid + YoloV8 file PoC
 //
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU
 // Affero General Public License as published by the Free Software Foundation, either version 3 of the
@@ -12,12 +12,13 @@
 //
 //---------------------------------------------------------------------------------
 using Microsoft.Extensions.Configuration;
-using Microsoft.ML.OnnxRuntime;
-
+#if GPURELEASE
+   using Microsoft.ML.OnnxRuntime;
+#endif
 using Compunet.YoloV8;
 using Compunet.YoloV8.Plotting;
 
-using SixLabors.ImageSharp;
+using SixLabors.ImageSharp; 
 using SixLabors.ImageSharp.PixelFormats;
 
 
@@ -30,7 +31,12 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
       {
          Model.ApplicationSettings _applicationSettings;
 
-         Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} Detect.Image starting");
+         Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss} Detect.dem-Compunet.Detect.Image starting");
+#if RELEASE
+         Console.WriteLine("RELEASE");
+#else
+         Console.WriteLine("DEBUG");
+#endif
 
          try
          {
@@ -160,14 +166,16 @@ namespace devMobile.IoT.YoloV8.Coprocessor.Detect.Image
 
                   var predictions = await predictor.DetectAsync(image);
 
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Warmup Iterations:{_applicationSettings.IterationsWarmUp}");
+
                   for (var i = 1; i <= _applicationSettings.IterationsWarmUp; i++)
                   {
                      predictions = await predictor.DetectAsync(image);
 
-                     Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i} Pre-process: {predictions.Speed.Preprocess.TotalMilliseconds:F0}mSec Inference: {predictions.Speed.Inference.TotalMilliseconds:F0}mSec Post-process: {predictions.Speed.Postprocess.TotalMilliseconds:F0}mSec");
+                     //Console.WriteLine($"{DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} Warmup {i}");
                   }
 
-                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start");
+                  Console.WriteLine($" {DateTime.UtcNow:yy-MM-dd HH:mm:ss.fff} YoloV8 Model detect start Iterations:{_applicationSettings.Iterations}");
                   DateTime start = DateTime.UtcNow;
 
                   for (var i = 0; i < _applicationSettings.Iterations; i++)
