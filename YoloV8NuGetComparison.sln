@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{6345FE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{0BD05FE2-575C-4F7A-A02D-AA1A7E0B0C51}"
 	ProjectSection(SolutionItems) = preProject
-		Assets\Images\ChickensFeederCluster.jpeg = Assets\Images\ChickensFeederCluster.jpeg
-		Assets\Images\ChickensNoClustering.jpeg = Assets\Images\ChickensNoClustering.jpeg
-		Assets\Images\TennisBallsSomeClusters.jpg = Assets\Images\TennisBallsSomeClusters.jpg
-		Assets\Images\TennisBallsSomeClusters640x640.jpeg = Assets\Images\TennisBallsSomeClusters640x640.jpeg
+		Assets\Images\TennisBallsPortrait.jpg = Assets\Images\TennisBallsPortrait.jpg
+		Assets\Images\TennisBalls.jpg = Assets\Images\TennisBalls.jpg
+		Assets\Images\TennisBallsLandscape640x640.jpg = Assets\Images\TennisBallsLandscape640x640.jpg
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{A90DAB1C-F23D-4C38-960A-0CC52CBD9326}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Models\TennisBallsYoloV8s20240618.onnx = Assets\Models\TennisBallsYoloV8s20240618.onnx
+		Assets\Models\TennisBallYolov8s20240918.onnx = Assets\Models\TennisBallYolov8s20240918.onnx
 		Assets\Models\yolov8s.onnx = Assets\Models\yolov8s.onnx
 	EndProjectSection
 EndProject
@@ -26,6 +26,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.NickSwardh.ImageV1", "YoloV8.Detect.NickSwardh.ImageV1\YoloV8.Detect.NickSwardh.ImageV1.csproj", "{383EB4AF-40F6-497A-80B2-C415FB6287DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8.Detect.NickSwardh.ImageV2", "YoloV8.Detect.NickSwardh.ImageV2\YoloV8.Detect.NickSwardh.ImageV2.csproj", "{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloV8", "YoloV8\Source\YoloV8\YoloV8.csproj", "{AB9E7D08-0DC3-4748-9259-1B205C56E2B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoloDotNet", "..\YoloDotNet\YoloDotNet\YoloDotNet.csproj", "{BB9C44DA-76B8-4212-B8A0-FDEB495D4A70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yolov8.Net", "..\Yolov8.Net\src\Yolov8net\Yolov8.Net.csproj", "{E8647FBE-5518-4E14-94EA-DCF0E738DF53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +55,18 @@ Global
 		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9227D231-5F76-43B9-9A6F-4F48A2A25DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB9E7D08-0DC3-4748-9259-1B205C56E2B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB9E7D08-0DC3-4748-9259-1B205C56E2B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB9E7D08-0DC3-4748-9259-1B205C56E2B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB9E7D08-0DC3-4748-9259-1B205C56E2B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9C44DA-76B8-4212-B8A0-FDEB495D4A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9C44DA-76B8-4212-B8A0-FDEB495D4A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9C44DA-76B8-4212-B8A0-FDEB495D4A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9C44DA-76B8-4212-B8A0-FDEB495D4A70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8647FBE-5518-4E14-94EA-DCF0E738DF53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8647FBE-5518-4E14-94EA-DCF0E738DF53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8647FBE-5518-4E14-94EA-DCF0E738DF53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8647FBE-5518-4E14-94EA-DCF0E738DF53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
