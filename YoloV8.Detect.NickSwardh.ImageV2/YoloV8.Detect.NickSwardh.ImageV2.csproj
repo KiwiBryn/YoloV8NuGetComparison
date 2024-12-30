@@ -26,12 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
-     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.8" />
-     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.8" />
-     <PackageReference Include="System.Text.Json" Version="8.0.4" />
-    <PackageReference Include="YoloDotNet" Version="2.0.0" />
+     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.116.1" />
+     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.116.1" />
+     <PackageReference Include="System.Text.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\YoloDotNet\YoloDotNet\YoloDotNet.csproj" />
   </ItemGroup>
 
 </Project>
